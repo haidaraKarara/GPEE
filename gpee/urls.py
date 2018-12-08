@@ -16,10 +16,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.conf.urls import url, include
+from rest_framework_swagger.views import get_swagger_view
+schema_view = get_swagger_view(title='API GPEE')
+
 
 urlpatterns = [
-    path('auth/', include('authentification.urls')),
-    path('admin/', admin.site.urls),
-    #url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),#browsable API.
-
+    path('api/', include('authentification.urls')),
+    path('api/',include('gestionclasse.urls')),
+    path('api/admin/', admin.site.urls),
+    url(r'^api/docs/', schema_view),
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),#browsable API.
 ]
