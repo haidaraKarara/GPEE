@@ -21,8 +21,8 @@ schema_view = get_swagger_view(title='API GPEE')
 
 
 urlpatterns = [
-    path('api/', include('authentification.urls')),
-    path('api/',include('gestionclasse.urls')),
+    path('api/auth/', include('authentification.urls')),
+    path('api/classes/',include('gestionclasse.urls')),
     path('api/admin/', admin.site.urls),
     url(r'^api/docs/', schema_view),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),#browsable API.

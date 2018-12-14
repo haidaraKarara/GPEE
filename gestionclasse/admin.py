@@ -3,7 +3,7 @@ from datetime import date
 from .models import *
 
 class EleveAdmin(admin.ModelAdmin):
-    list_display   = ('nom', 'prenom', 'adresse','classe','calculate_age',)
+    list_display   = ('id','nom', 'prenom', 'adresse','classe','calculate_age','sexe')
     list_filter    = ('sexe','classe')
     ordering       = ('date_arrivee',)
     search_fields  = ('nom','prenom')

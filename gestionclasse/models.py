@@ -9,13 +9,13 @@ class Classe(models.Model):
 
 class Eleve(models.Model):
     SEXE_CHOICES = (
-        ('F', 'Femme'),
-        ('H', 'Homme'),
+        ('F', 'F'),
+        ('M', 'M'),
     )
-    def calculate_age(self,born):
-        """ Calculate the age of the student """
-        today = date.today()
-        return today.year - born.year - ((today.month, today.day) < (born.month, born.day))
+    # def calculate_age(self,born):
+    #     """ Calculate the age of the student """
+    #     today = date.today()
+    #     return today.year - born.year - ((today.month, today.day) < (born.month, born.day))
     nom = models.CharField(max_length=100)
     prenom = models.CharField(max_length=100)
     adresse = models.CharField(max_length=100)
@@ -24,9 +24,7 @@ class Eleve(models.Model):
     date_naissance = models.DateField("Date de naissance")
     lieu_naissance = models.CharField("Lieu de naissance",max_length=100)
     sexe = models.CharField(max_length=1, choices=SEXE_CHOICES)
-    # AGE = calculate_age(date_naissance) # we calculate his age
-    # age = models.IntegerField(default=calculate_age(date_naissance.value),blank=True)
-    date_arrivee = models.DateField("Date d'arrivée",auto_now_add=True)
+    date_arrivee = models.DateField("Date d'arrivée",blank=True,null=True)
     ancienne_ecole = models.CharField("Ancienne école",max_length=100,blank=True,null=True,default='-')
     classe = models.ForeignKey(Classe, on_delete=models.CASCADE,related_name='eleves')
 
@@ -46,16 +44,16 @@ class Mensualite(models.Model):
         ('mai', 'mai'),
         ('juin', 'juin'),
         ('juillet', 'juillet'),
-        ('aout', 'août'),
-        ('septembre', 'septembre'),
+        # ('aout', 'août'),
+        # ('septembre', 'septembre'),
         ('octobre', 'octobre'),
         ('novembre', 'novembre'),
         ('decembre', 'decembre'),
     )
+    eleve = models.ForeignKey(Eleve, on_delete=models.CASCADE,related_name='mensualites')
     has_paid = models.BooleanField(default=False)
     mois_paye = models.CharField("Mois payé",choices=MONTH_CHOICES,max_length=30)
-    date_paye = models.DateField("Date paiment",auto_now_add=True)
-    eleve = models.ForeignKey(Eleve, on_delete=models.CASCADE,related_name='mensualite')
+    date_paye = models.DateField("Date paiment",auto_now_add=True,blank=True)
 
     class Meta:
         verbose_name = "Mensualité"
@@ -63,5 +61,14 @@ class Mensualite(models.Model):
 
     def __str__(self):
         return self.mois_paye
+
+class Statistics(object):
+
+    def __init__(self, nb_of_students, nb_of_class, nb_of_boys,nb_of_girls):
+        self.nb_of_students = nb_of_students
+        self.nb_of_class = nb_of_class
+        self.nb_of_boys = nb_of_boys 
+        self.nb_of_girls = nb_of_girls
+
 
 
