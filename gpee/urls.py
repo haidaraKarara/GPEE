@@ -21,7 +21,8 @@ schema_view = get_swagger_view(title='API GPEE')
 
 
 urlpatterns = [
-    path('api/auth/', include('authentification.urls')),
+    url(r'api/auth/', include('knox.urls')),
+    # path('api/auth/', include('authentification.urls')),
     path('api/classes/',include('gestionclasse.urls')),
     path('api/admin/', admin.site.urls),
     url(r'^api/docs/', schema_view),
