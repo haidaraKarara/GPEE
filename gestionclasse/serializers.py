@@ -27,7 +27,8 @@ class EleveSerializer(serializers.ModelSerializer):
 
 
 class ClasseSerializer(serializers.ModelSerializer):
-    
+    eleves = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+
     class Meta:
         model = Classe
         fields = '__all__'

@@ -75,5 +75,6 @@ def statistics(request):
                     )
 
     serializer = StatSerializer(stat)
+    print(serializer)
     return Response(serializer.data,status=HTTP_200_OK)
                     

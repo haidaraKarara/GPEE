@@ -2,10 +2,14 @@ from django.db import models
 from datetime import date
 
 class Classe(models.Model):
-    libelle = models.CharField("Nom de la classe",max_length=100)
+    libelle = models.CharField("<Classe>",max_length=100,unique=True)
 
     def __str__(self):
         return self.libelle
+
+    class Meta:
+        ordering = ('libelle',)
+
 
 class Eleve(models.Model):
     SEXE_CHOICES = (
@@ -16,17 +20,17 @@ class Eleve(models.Model):
     #     """ Calculate the age of the student """
     #     today = date.today()
     #     return today.year - born.year - ((today.month, today.day) < (born.month, born.day))
-    nom = models.CharField(max_length=100)
     prenom = models.CharField(max_length=100)
-    adresse = models.CharField(max_length=100)
-    tuteur = models.CharField("Son/Sa tuteur/tutrice",max_length=100,default='Aucun')
-    telephone = models.IntegerField("Téléphone du tuteur",blank=True,null=True,unique=True)
+    nom = models.CharField(max_length=100)
     date_naissance = models.DateField("Date de naissance")
     lieu_naissance = models.CharField("Lieu de naissance",max_length=100)
     sexe = models.CharField(max_length=1, choices=SEXE_CHOICES)
-    date_arrivee = models.DateField("Date d'arrivée",blank=True,null=True)
-    ancienne_ecole = models.CharField("Ancienne école",max_length=100,blank=True,null=True,default='-')
     classe = models.ForeignKey(Classe, on_delete=models.CASCADE,related_name='eleves')
+    tuteur = models.CharField("Son/Sa tuteur/tutrice",max_length=100,default='Aucun',blank=True)
+    telephone = models.IntegerField("Téléphone du tuteur",blank=True,null=True)
+    adresse = models.CharField(max_length=100,blank=True)
+    ancienne_ecole = models.CharField("Ancienne école",max_length=100,blank=True,null=True,default='-')
+    date_arrivee = models.DateField("Date d'arrivée",blank=True,null=True)
 
     def __str__(self):
         return self.prenom  +' '+ self.nom

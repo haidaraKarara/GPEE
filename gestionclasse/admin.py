@@ -33,6 +33,7 @@ class EleveAdmin(admin.ModelAdmin):
 class ClasseAdmin(admin.ModelAdmin):
     list_display   = ('libelle',)
     search_fields  = ('libelle',)
+    ordering       = ('libelle',)
 
 # class TuteurAdmin(admin.ModelAdmin):
 #     list_display   = ('nom','prenom','adresse','profession', 'telephone',)
